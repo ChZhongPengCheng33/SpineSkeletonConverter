@@ -40,4 +40,5 @@ public class IOUtils {
     public static Spine35DataInputStream inputStreamOf(String url) {
         return inputStreamOf(FileUtil.file(url));
     }
+
 }

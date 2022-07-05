@@ -26,18 +26,24 @@ public class Spine35DataInputStream extends DataInputStream {
      */
     public int readInt(boolean optimizePositive) throws IOException {
         int b = read();
+        // 取该byte作为该Integer的低1-7位
         int result = b & 0x7F;
+        // 当且仅当该byte的最高位为1时继续读取，即 1000 0000（128） ~ 1111 1111（255），或[0, -127]
         if ((b & 0x80) != 0) {
             b = read();
+            // 屏蔽符号位，然后左移7位，最后通过|操作累加到现有结果上
             result |= (b & 0x7F) << 7;
             if ((b & 0x80) != 0) {
                 b = read();
+                // 屏蔽符号位，然后左移14位，最后通过|操作累加到现有结果上
                 result |= (b & 0x7F) << 14;
                 if ((b & 0x80) != 0) {
                     b = read();
+                    // 屏蔽符号位，然后左移21位，最后通过|操作累加到现有结果上
                     result |= (b & 0x7F) << 21;
                     if ((b & 0x80) != 0) {
                         b = read();
+                        // 屏蔽符号位，然后左移28位，此时仅剩余该byte的右4位，右4位的第一位作为符号位，剩余的右3位作为数字
                         result |= (b & 0x7F) << 28;
                     }
                 }
