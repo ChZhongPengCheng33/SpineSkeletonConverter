@@ -20,14 +20,11 @@ public class PipelineRoute {
     /**
      * 路由表
      */
-    private static final Map<Class<? extends PipelineContext>,
-            List<Class<? extends ContextHandler<? extends PipelineContext>>>> ROUTE_MAP = new HashMap<>();
-    /**
-     * 路由实例缓存
-     */
-    private static Map<Class<? extends PipelineContext>, List<? extends ContextHandler<? extends PipelineContext>>> cacheRoute;
+    private static final Map<Class<? extends PipelineContext>, List<Class<? extends ContextHandler<? extends PipelineContext>>>> ROUTE_MAP;
 
     static {
+        ROUTE_MAP = new HashMap<>();
+
         // Spine v3.5.**
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v35.context.BinaryContext.class, CollectionUtil.toList(
                 com.zhongpengcheng.spine.io.v35.handler.BinaryHeadReader.class,
@@ -41,29 +38,25 @@ public class PipelineRoute {
                 com.zhongpengcheng.spine.io.v35.handler.BinaryAnimationsReader.class
         ));
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v35.context.JsonContext.class, CollectionUtil.toList(
-
         ));
+
         // Spine v3.8.**
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v38.context.BinaryContext.class, CollectionUtil.toList(
-
         ));
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v38.context.JsonContext.class, CollectionUtil.toList(
-
         ));
-
     }
 
     /**
      * 获取路由实例
      */
     public static Map<Class<? extends PipelineContext>, List<? extends ContextHandler<? extends PipelineContext>>> getRoute() {
-        if (cacheRoute == null) {
-            log.debug("进行处理器路由初始化");
-            cacheRoute = ROUTE_MAP.entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, PipelineRoute::toPipeline));
+        try {
+            log.debug("获取路由表");
+            return InstanceHolder.cacheRoute;
+        } finally {
+            log.debug("获取路由表结束");
         }
-        return cacheRoute;
     }
 
     /**
@@ -71,9 +64,27 @@ public class PipelineRoute {
      */
     private static List<ContextHandler<? extends PipelineContext>> toPipeline(Map.Entry<Class<? extends PipelineContext>,
             List<Class<? extends ContextHandler<? extends PipelineContext>>>> entry) {
-        return entry.getValue()
-                .stream()
+        return entry.getValue().stream()
                 .map(ReflectUtil::newInstanceIfPossible)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 使用静态内部类实现处理器路由表的单例
+     */
+    public static class InstanceHolder {
+
+        /**
+         * 路由实例缓存
+         */
+        public static Map<Class<? extends PipelineContext>, List<? extends ContextHandler<? extends PipelineContext>>> cacheRoute;
+
+        static {
+            log.debug("进行处理器路表初始化");
+            cacheRoute = ROUTE_MAP.entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, PipelineRoute::toPipeline));
+            log.debug("路由表初始化完成");
+        }
     }
 }

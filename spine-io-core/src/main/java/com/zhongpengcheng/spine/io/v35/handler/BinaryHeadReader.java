@@ -38,6 +38,7 @@ public class BinaryHeadReader extends AbstractBinaryReader {
                     .fps(input.readFloat())
                     .images(input.readString(null));
         }
+        ctx.setHead(builder.build());
 
         return true;
     }

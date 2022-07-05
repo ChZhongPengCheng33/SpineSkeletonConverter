@@ -1,82 +1,38 @@
 package com.zhongpengcheng.spine.io.v35;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.zhongpengcheng.spine.io.SpineDataOutputStream;
+import com.zhongpengcheng.spine.io.executor.PipelineExecutor;
+import com.zhongpengcheng.spine.io.v35.context.BinaryContext;
+import com.zhongpengcheng.spine.io.v35.pojo.Head;
 import com.zhongpengcheng.spine.util.IOUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 class Spine35DataInputStreamTest {
-    int mask1 = 0x7f;
-    int mask2 = 0x80;
-    @Test
-    void testReadStringHead() {
-        int data = 0x1c;
-        System.out.println(to32BitBinStr(data));
-        System.out.println(to32BitBinStr(mask1));
-        System.out.println(to32BitBinStr(data & mask1));
-        System.out.println(to32BitBinStr((data & mask1) << 7));
-        System.out.println(to32BitBinStr((data & mask1) << 14));
-        System.out.println(to32BitBinStr((data & mask1) << 21));
-        System.out.println(to32BitBinStr((data & mask1) << 28));
-        System.out.println(to32BitBinStr(mask2));
-        System.out.println(to32BitBinStr(Integer.MAX_VALUE));
-    }
-
-    @Test
-    void testWriteInteger() {
-        int maxValue = Integer.MAX_VALUE;
-        int low7to1 = maxValue & 0b1111111;
-        int low14to8 = maxValue & 0b11111110000000;
-        System.out.println(Integer.toHexString(low7to1));
-        System.out.println(Integer.toHexString(low14to8));
-    }
-
-    @Test
-    void testAdd1() {
-        byte b = 0b1111111;
-        System.out.println(Integer.toBinaryString(b | 0x80));
-        System.out.println(Integer.toBinaryString(b << 1));
-        System.out.println(Integer.toBinaryString(b << 1 >> 1));
-    }
-
-    @Test
-    void testReadInt() throws IOException {
-        Spine35DataInputStream input = new Spine35DataInputStream(IOUtils.inputStreamOf("output/intTest.bin"));
-        int num1 = input.readInt(true);
-        int num2 = input.readInt(true);
-        System.out.println(Integer.MAX_VALUE == num1);
-        System.out.println(Integer.MAX_VALUE == num2);
-        input.close();
-    }
-
-    @Test
-    void testWriteInt() throws IOException {
-        BufferedOutputStream outputStream = FileUtil.getOutputStream("output/" + System.currentTimeMillis() + ".bin");
-        SpineDataOutputStream output = new SpineDataOutputStream(outputStream);
-        output.writeInteger(1007632432);
-        output.close();
-    }
 
     @Test
     void testReadWrite() throws IOException {
         String path = "output/test_io_int_" + System.currentTimeMillis() + ".bin";
         int count = 10000;
         ArrayList<Integer> list = new ArrayList<>(count);
-        try (SpineDataOutputStream output = new SpineDataOutputStream(FileUtil.getOutputStream(path))) {
+
+        try (SpineDataOutputStream output = IOUtils.outputStreamOf(path)) {
             for (int i = 0; i < count; i++) {
                 int number = RandomUtil.randomInt();
                 list.add(number);
                 output.writeInteger(number);
             }
         }
-        try(Spine35DataInputStream input = new Spine35DataInputStream(IOUtils.inputStreamOf(path))) {
+
+        try(Spine35DataInputStream input = IOUtils.inputStreamOf(path)) {
             for (int i = 0; i < count; i++) {
                 assertEquals(list.get(i), input.readInt(true), count + " " + list.get(i));
             }
@@ -88,30 +44,60 @@ class Spine35DataInputStreamTest {
         String path = "output/test_io_str_" + System.currentTimeMillis() + ".bin";
         int count = 100;
         ArrayList<String> list = new ArrayList<>(count);
-        try (SpineDataOutputStream output = new SpineDataOutputStream(FileUtil.getOutputStream(path))) {
-            for (int i = 0; i < count; i++) {
-                String element = RandomUtil.randomString(10 * count);
+
+        try (SpineDataOutputStream output = IOUtils.outputStreamOf(path)) {
+            for (int i = 1; i <= count; i++) {
+                String element = "start_中间_" + RandomUtil.randomString(i) + "_end";
                 element = i % 10 == 0 ? "" : element;
                 list.add(element);
                 output.writeString(element);
             }
         }
-        try(Spine35DataInputStream input = new Spine35DataInputStream(IOUtils.inputStreamOf(path))) {
+
+        try(Spine35DataInputStream input = IOUtils.inputStreamOf(path)) {
             for (int i = 0; i < count; i++) {
-                assertEquals(list.get(i), input.readString(), count + " " + list.get(i));
+                String str = input.readString();
+                assertEquals(list.get(i), str, count + " " + list.get(i));
+                log.info("读取字符串 {}", str);
             }
         }
     }
 
-    private String to32BitBinStr(int i) {
-        String str = Integer.toBinaryString(i);
-        if (str.length() >= 32) return str;
-        StringBuilder sb = new StringBuilder();
-        for (int i1 = 0; i1 < 32 - str.length(); i1++) {
-            sb.append("0");
-        }
-        sb.append(str);
+    @Test
+    void testWriteSkel() throws IOException {
+        BinaryContext ctx = BinaryContext.of("spineboy/spineboy.skel");
+        boolean result = PipelineExecutor.acceptSync(ctx);
 
-        return sb.toString();
+        assertTrue(result);
+        ctx.close();
+
+        String outputPath = "output/test_io_skel_" + System.currentTimeMillis() + ".bin";
+        Head head = ctx.getHead();
+
+        try(SpineDataOutputStream out = IOUtils.outputStreamOf(outputPath)) {
+            out.writeString(head.getHash());
+            out.writeString(head.getVersion());
+            out.writeFloat(head.getWidth());
+            out.writeFloat(head.getHeight());
+            out.writeBoolean(head.getNonessential());
+
+            if (head.getNonessential()) {
+                out.writeFloat(head.getFps());
+                out.writeString(head.getImages());
+            }
+        }
+
+        try(Spine35DataInputStream input = IOUtils.inputStreamOf(outputPath)) {
+            assertEquals(head.getHash(), input.readString());
+            assertEquals(head.getVersion(), input.readString());
+            assertEquals(head.getWidth(), input.readFloat());
+            assertEquals(head.getHeight(), input.readFloat());
+            assertEquals(head.getNonessential(), input.readBoolean());
+
+            if (head.getNonessential()) {
+                assertEquals(head.getFps(), input.readFloat());
+                assertEquals(head.getImages(), input.readString());
+            }
+        }
     }
 }
