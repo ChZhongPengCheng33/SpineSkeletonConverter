@@ -2,7 +2,7 @@ package com.zhongpengcheng.spine.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IORuntimeException;
-import com.zhongpengcheng.spine.io.SpineDataOutputStream;
+import com.zhongpengcheng.spine.io.v35.Spine35DataOutputStream;
 import com.zhongpengcheng.spine.io.v35.Spine35DataInputStream;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,7 +48,7 @@ public class IOUtils {
      * @param url 文件路径
      * @return 可能为空
      */
-    public static SpineDataOutputStream outputStreamOf(String url) {
+    public static Spine35DataOutputStream outputStreamOf(String url) {
         return outputStreamOf(FileUtil.file(url));
     }
 
@@ -57,9 +57,9 @@ public class IOUtils {
      * @param file 目标文件
      * @return 可能为空
      */
-    public static SpineDataOutputStream outputStreamOf(File file) {
+    public static Spine35DataOutputStream outputStreamOf(File file) {
         try {
-            return new SpineDataOutputStream(FileUtil.getOutputStream(file));
+            return new Spine35DataOutputStream(FileUtil.getOutputStream(file));
         } catch (IORuntimeException e) {
             log.error("获取输出流异常：" + file.getName(), e);
         }

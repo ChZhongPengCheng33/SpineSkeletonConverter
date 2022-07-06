@@ -1,4 +1,4 @@
-package com.zhongpengcheng.spine.io;
+package com.zhongpengcheng.spine.io.v35;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * @since 2022-07-05 15:14:57
  **/
 @Slf4j
-public class SpineDataOutputStream extends DataOutputStream {
+public class Spine35DataOutputStream extends DataOutputStream {
 
     /**
      * 分块mask
@@ -25,7 +25,7 @@ public class SpineDataOutputStream extends DataOutputStream {
      */
     public static final int NEXT_MASK = 0x80;
 
-    public SpineDataOutputStream(OutputStream out) {
+    public Spine35DataOutputStream(OutputStream out) {
         super(out);
     }
 
