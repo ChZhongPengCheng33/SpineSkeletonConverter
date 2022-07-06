@@ -80,6 +80,25 @@ public abstract class AbstractContext extends PipelineContext {
     }
 
     /**
+     * 查找第一个匹配到的名称的骨骼的下标
+     * @param boneName 骨骼名称
+     * @return 骨骼下标
+     */
+    public int getBoneIndex(final String boneName) {
+        int index = 0;
+        if (CollectionUtil.isEmpty(bones)) return index;
+
+        for (int i = 0; i < bones.size(); i++) {
+            if (boneName.equals(bones.get(i).getName())) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    /**
      * 获取指定index的slot的名称
      */
     public String getSlotName(int index) {

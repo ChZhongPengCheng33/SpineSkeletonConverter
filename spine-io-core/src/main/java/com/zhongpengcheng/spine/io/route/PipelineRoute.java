@@ -4,6 +4,11 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.zhongpengcheng.spine.io.context.PipelineContext;
 import com.zhongpengcheng.spine.io.handler.ContextHandler;
+import com.zhongpengcheng.spine.io.v35.context.BinaryReaderContext;
+import com.zhongpengcheng.spine.io.v35.context.BinaryWriterContext;
+import com.zhongpengcheng.spine.io.v35.handler.input.*;
+import com.zhongpengcheng.spine.io.v35.handler.output.BinaryHeadWriter;
+import com.zhongpengcheng.spine.io.v35.handler.output.OutputStreamCloseHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -26,16 +31,21 @@ public class PipelineRoute {
         ROUTE_MAP = new HashMap<>();
 
         // Spine v3.5.**
-        ROUTE_MAP.put(com.zhongpengcheng.spine.io.v35.context.BinaryContext.class, CollectionUtil.toList(
-                com.zhongpengcheng.spine.io.v35.handler.BinaryHeadReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinaryBonesReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinarySlotsReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinaryIksReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinaryTransformsReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinaryPathsReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinarySkinsReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinaryEventsReader.class,
-                com.zhongpengcheng.spine.io.v35.handler.BinaryAnimationsReader.class
+        ROUTE_MAP.put(BinaryReaderContext.class, CollectionUtil.toList(
+                BinaryHeadReader.class,
+                BinaryBonesReader.class,
+                BinarySlotsReader.class,
+                BinaryIksReader.class,
+                BinaryTransformsReader.class,
+                BinaryPathsReader.class,
+                BinarySkinsReader.class,
+                BinaryEventsReader.class,
+                BinaryAnimationsReader.class,
+                InputStreamCloseHandler.class
+        ));
+        ROUTE_MAP.put(BinaryWriterContext.class, CollectionUtil.toList(
+                BinaryHeadWriter.class,
+                OutputStreamCloseHandler.class
         ));
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v35.context.JsonContext.class, CollectionUtil.toList(
         ));

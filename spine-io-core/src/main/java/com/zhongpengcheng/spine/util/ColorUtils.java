@@ -47,9 +47,9 @@ public class ColorUtils {
             throw new IllegalArgumentException("color字符串格式错误：" + hexColor);
         }
 
-        return (Integer.valueOf(hexColor.substring(1, 3), 16) >> 24)
-                | (Integer.valueOf(hexColor.substring(3, 5), 16) >> 16)
-                | (Integer.valueOf(hexColor.substring(5, 7), 16) >> 8)
+        return (Integer.valueOf(hexColor.substring(1, 3), 16) << 24)
+                | (Integer.valueOf(hexColor.substring(3, 5), 16) << 16)
+                | (Integer.valueOf(hexColor.substring(5, 7), 16) << 8)
                 | (Integer.valueOf(hexColor.substring(7, 9), 16));
     }
 
