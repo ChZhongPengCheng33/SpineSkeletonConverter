@@ -67,8 +67,17 @@ public class BinaryAnimationsReader extends AbstractBinaryReader {
         public static final int PATH_SPACING = 1;
         public static final int PATH_MIX = 2;
 
+        /**
+         * 线性曲线
+         */
         public static final int CURVE_NONE = 0;
+        /**
+         * 分段曲线
+         */
         public static final int CURVE_STEPPED = 1;
+        /**
+         * 贝塞尔曲线
+         */
         public static final int CURVE_BEZIER = 2;
 
         public static final String SLOT_KEY = "slots";
@@ -485,7 +494,7 @@ public class BinaryAnimationsReader extends AbstractBinaryReader {
         }
 
         /**
-         * 读取曲线时间线的曲线数据
+         * 读取关键帧切换曲线
          *
          * @param timeline 曲线时间线，继承自{@link CurveTimeline}
          */

@@ -17,6 +17,9 @@ import java.util.Map;
 @Data
 @Builder
 public class Skin {
+    /**
+     * 皮肤的名称. 该参数在一个skeleton中是唯一的.
+     */
     private String name;
     // key: slotName, value: attachments
     private Map<String, List<IAttachment>> attachments;

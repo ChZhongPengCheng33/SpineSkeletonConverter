@@ -14,34 +14,32 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(of = "hash")
 public class Head {
     /**
-     * 骨骼文件哈希值，计算方式未知
+     * 所有skeleton数据的哈希值. 该值可被工具用来检测数据在上次加载后是否有变化.
      */
     private String hash;
     /**
-     * 导出骨骼文件的Spine版本
+     * 导出这份数据的Spine版本. 该值可以被工具用来在读取时保持特定Spine版本.
      */
     private String version;
     /**
-     * 骨骼中attachments的的宽度
+     * skeleton附件的AABB宽度, 与Spine中的setup pose相同. 虽然骨架的AABB取决于其摆放方式, 但可将此参数作为skeleton的大概尺寸.
      */
     private Float width;
     /**
-     * 骨骼中attachments的的高度
+     * skeleton附件的AABB高度, 与Spine中的setup pose相同.
      */
     private Float height;
     /**
-     * 如果为假，将省略标记为非必要的数据。
+     * 非必要的参数: 如果该参数为false, 则标记为非必要的参数将被忽略.
      */
     @Builder.Default
     private Boolean nonessential = Boolean.FALSE;
     /**
-     * 骨骼动画的帧数
-     * 非必须
+     * Dopesheet的帧率, 单位为帧数/每秒, 与Spine中一致. 非必要的参数.
      */
     private Float fps;
     /**
-     * 贴图文件路径
-     * 非必须
+     * 图像路径, 与Spine中一致. 非必要的参数.
      */
     private String images;
 }

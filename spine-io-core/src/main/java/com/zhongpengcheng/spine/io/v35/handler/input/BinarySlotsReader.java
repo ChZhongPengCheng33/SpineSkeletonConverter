@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 /**
- * spine35版本二进制骨骼插槽读取器
+ * 插槽读取器
  *
  * @author ZhongPengCheng
  * @since 2022-06-06 22:37:00

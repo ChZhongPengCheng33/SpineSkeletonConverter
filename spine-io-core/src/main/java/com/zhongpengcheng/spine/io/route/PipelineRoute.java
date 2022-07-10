@@ -7,6 +7,7 @@ import com.zhongpengcheng.spine.io.handler.ContextHandler;
 import com.zhongpengcheng.spine.io.v35.context.BinaryReaderContext;
 import com.zhongpengcheng.spine.io.v35.context.BinaryWriterContext;
 import com.zhongpengcheng.spine.io.v35.handler.input.*;
+import com.zhongpengcheng.spine.io.v35.handler.output.BinaryBonesWriter;
 import com.zhongpengcheng.spine.io.v35.handler.output.BinaryHeadWriter;
 import com.zhongpengcheng.spine.io.v35.handler.output.OutputStreamCloseHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,7 @@ public class PipelineRoute {
         ));
         ROUTE_MAP.put(BinaryWriterContext.class, CollectionUtil.toList(
                 BinaryHeadWriter.class,
+                BinaryBonesWriter.class,
                 OutputStreamCloseHandler.class
         ));
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v35.context.JsonContext.class, CollectionUtil.toList(

@@ -16,24 +16,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Slot {
     /**
-     * 插槽名称
+     * 槽位的名称. 该参数在一个skeleton中是唯一的.
      */
     private String name;
     /**
-     * 插槽编号
+     * 编号
      */
     private Integer id;
     /**
-     * 插槽对应骨骼信息
+     * 对应骨骼名称
      */
     private String bone;
     /**
-     * 插槽附件名称
+     * 在setup pose中槽位的附件名称. 如果为空, 表示在setup pose没有附件.
      */
     private String attachment;
     /**
-     * 插槽颜色
+     * 在setup pose中槽位的颜色.
      */
     private String color;
+    /**
+     * 在绘制槽位的可见附件时要使用的blending类型.
+     */
     private String blend;
 }
