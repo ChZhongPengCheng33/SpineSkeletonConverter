@@ -1,6 +1,6 @@
 package com.zhongpengcheng.spine.io.v35.context;
 
-import com.zhongpengcheng.spine.io.SpineDataOutputStream;
+import com.zhongpengcheng.spine.io.stream.SpineDataOutputStream;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

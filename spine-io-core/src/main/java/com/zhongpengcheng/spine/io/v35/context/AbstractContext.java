@@ -2,7 +2,7 @@ package com.zhongpengcheng.spine.io.v35.context;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.zhongpengcheng.spine.io.context.PipelineContext;
-import com.zhongpengcheng.spine.io.v35.pojo.*;
+import com.zhongpengcheng.spine.io.pojo.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -131,6 +131,24 @@ public abstract class AbstractContext extends PipelineContext {
      */
     public Path getPath(int index) {
         return Optional.ofNullable(CollectionUtil.get(this.paths, index)).orElseGet(Path::new);
+    }
+
+    /**
+     * 生成Skeleton对象
+     */
+    @Override
+    public Skeleton toSkeleton() {
+        return Skeleton.builder()
+                .head(head)
+                .bones(bones)
+                .slots(slots)
+                .iks(iks)
+                .transforms(transforms)
+                .paths(paths)
+                .skins(skins)
+                .events(events)
+                .animations(animations)
+                .build();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.zhongpengcheng.spine.fastjson.serializer.timeline;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.ITimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.ITimeline;
 
 /**
  * 时间线序列化器

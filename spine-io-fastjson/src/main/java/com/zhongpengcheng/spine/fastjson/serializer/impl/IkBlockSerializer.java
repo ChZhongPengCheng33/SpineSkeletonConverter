@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhongpengcheng.spine.fastjson.serializer.TimelineBlockSerializer;
 import com.zhongpengcheng.spine.fastjson.serializer.timeline.TimelineSerializer;
 import com.zhongpengcheng.spine.fastjson.serializer.timeline.TimelineSerializerFactory;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.ITimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.ITimeline;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

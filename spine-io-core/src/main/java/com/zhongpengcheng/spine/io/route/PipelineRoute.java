@@ -7,8 +7,8 @@ import com.zhongpengcheng.spine.io.handler.ContextHandler;
 import com.zhongpengcheng.spine.io.v35.context.BinaryReaderContext;
 import com.zhongpengcheng.spine.io.v35.context.BinaryWriterContext;
 import com.zhongpengcheng.spine.io.v35.handler.input.*;
-import com.zhongpengcheng.spine.io.v35.handler.output.BinaryBonesWriter;
-import com.zhongpengcheng.spine.io.v35.handler.output.BinaryHeadWriter;
+import com.zhongpengcheng.spine.io.v35.handler.output.BinaryBonesSerializer;
+import com.zhongpengcheng.spine.io.v35.handler.output.BinaryHeadSerializer;
 import com.zhongpengcheng.spine.io.v35.handler.output.OutputStreamCloseHandler;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,20 +33,20 @@ public class PipelineRoute {
 
         // Spine v3.5.**
         ROUTE_MAP.put(BinaryReaderContext.class, CollectionUtil.toList(
-                BinaryHeadReader.class,
-                BinaryBonesReader.class,
-                BinarySlotsReader.class,
-                BinaryIksReader.class,
-                BinaryTransformsReader.class,
-                BinaryPathsReader.class,
-                BinarySkinsReader.class,
-                BinaryEventsReader.class,
-                BinaryAnimationsReader.class,
+                BinaryHeadParser.class,
+                BinaryBonesParser.class,
+                BinarySlotsParser.class,
+                BinaryIksParser.class,
+                BinaryTransformsParser.class,
+                BinaryPathsParser.class,
+                BinarySkinsParser.class,
+                BinaryEventsParser.class,
+                BinaryAnimationsParser.class,
                 InputStreamCloseHandler.class
         ));
         ROUTE_MAP.put(BinaryWriterContext.class, CollectionUtil.toList(
-                BinaryHeadWriter.class,
-                BinaryBonesWriter.class,
+                BinaryHeadSerializer.class,
+                BinaryBonesSerializer.class,
                 OutputStreamCloseHandler.class
         ));
         ROUTE_MAP.put(com.zhongpengcheng.spine.io.v35.context.JsonContext.class, CollectionUtil.toList(

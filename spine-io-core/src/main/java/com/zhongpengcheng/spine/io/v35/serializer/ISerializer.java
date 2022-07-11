@@ -1,6 +1,6 @@
 package com.zhongpengcheng.spine.io.v35.serializer;
 
-import com.zhongpengcheng.spine.io.v35.pojo.Skeleton;
+import com.zhongpengcheng.spine.io.pojo.Skeleton;
 
 /**
  * 序列化器接口

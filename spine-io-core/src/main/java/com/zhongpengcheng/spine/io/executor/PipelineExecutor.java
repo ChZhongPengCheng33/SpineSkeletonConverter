@@ -49,7 +49,7 @@ public class PipelineExecutor {
      * @return 执行结果
      */
     @SuppressWarnings("unchecked")
-    public static boolean acceptSync(PipelineContext ctx) {
+    public static boolean acceptSync(final PipelineContext ctx) {
         if (ctx == null) {
             log.error("管道上下文为空");
             return false;
@@ -59,6 +59,7 @@ public class PipelineExecutor {
         List<Object> pipelines = routeMap.get(ctxClass);
         if (CollectionUtil.isEmpty(pipelines)) {
             log.error("管道[{}]上下文对应的管道为空: ctxClass={}", ctx, ctxClass.getSimpleName());
+            ctx.setEx(new IllegalArgumentException("上下文对应的管道为空"));
             return false;
         }
 
@@ -76,6 +77,7 @@ public class PipelineExecutor {
             } catch (Throwable ex) {
                 finalRet = false;
                 ctx.close();
+                ctx.setEx(ex);
                 log.error("管道[{}]执行异常: {}", ctx, ex.getMessage());
             }
             if (!finalRet) {

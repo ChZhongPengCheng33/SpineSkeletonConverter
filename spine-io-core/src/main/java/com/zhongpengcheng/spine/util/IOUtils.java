@@ -2,14 +2,11 @@ package com.zhongpengcheng.spine.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IORuntimeException;
-import com.zhongpengcheng.spine.io.SpineDataOutputStream;
-import com.zhongpengcheng.spine.io.SpineDataInputStream;
+import com.zhongpengcheng.spine.io.stream.SpineDataOutputStream;
+import com.zhongpengcheng.spine.io.stream.SpineDataInputStream;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 /**
  * IO工具类
@@ -41,6 +38,21 @@ public class IOUtils {
      */
     public static SpineDataInputStream inputStreamOf(String url) {
         return inputStreamOf(FileUtil.file(url));
+    }
+
+    /**
+     * 从输入流读构造{@link SpineDataInputStream}
+     * @param input 输入流
+     * @return 可能为空
+     */
+    public static SpineDataInputStream inputStreamOf(InputStream input) {
+        try {
+            return new SpineDataInputStream(new BufferedInputStream(input, 512));
+        } catch (Exception e) {
+            log.error("从输入流获取SpineIO输入流异常", e);
+        }
+
+        return null;
     }
 
     /**

@@ -3,9 +3,9 @@ package com.zhongpengcheng.spine.fastjson.serializer.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.zhongpengcheng.spine.fastjson.serializer.GroupTimelineSerializer;
 import com.zhongpengcheng.spine.fastjson.serializer.TimelineBlockSerializer;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.ITimeline;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.RotateTimeline;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.TranslateTimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.ITimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.RotateTimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.TranslateTimeline;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

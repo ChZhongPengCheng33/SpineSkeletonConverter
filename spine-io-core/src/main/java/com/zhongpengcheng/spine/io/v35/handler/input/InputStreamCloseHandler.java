@@ -12,7 +12,7 @@ import java.io.IOException;
  * @since 2022-07-06 14:36:28
  **/
 @Slf4j
-public class InputStreamCloseHandler extends AbstractBinaryReader {
+public class InputStreamCloseHandler extends AbstractBinaryParser {
     @Override
     public String getName() {
         return super.getName() + ":输入流关闭处理器";

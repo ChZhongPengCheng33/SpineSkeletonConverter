@@ -1,13 +1,11 @@
 package com.zhongpengcheng.spine.io;
 
+import com.zhongpengcheng.spine.io.stream.SpineDataInputStream;
 import com.zhongpengcheng.spine.util.IOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class SpineDataInputStreamTest {

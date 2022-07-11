@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author zhongpengcheng
  * @since 2022-07-06 14:50:22
  **/
-public class OutputStreamCloseHandler extends AbstractBinaryWriter {
+public class OutputStreamCloseHandler extends AbstractBinarySerializer {
     @Override
     public String getName() {
         return "输出流关闭处理器";

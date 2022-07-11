@@ -3,11 +3,11 @@ package com.zhongpengcheng.spine.fastjson;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhongpengcheng.spine.exception.SkeletonIOException;
+import com.zhongpengcheng.spine.exception.SpineIOException;
 import com.zhongpengcheng.spine.fastjson.serializer.TimelineBlockSerializer;
 import com.zhongpengcheng.spine.fastjson.serializer.TimelineBlockSerializerFactory;
-import com.zhongpengcheng.spine.io.v35.pojo.*;
-import com.zhongpengcheng.spine.io.v35.pojo.attachment.*;
+import com.zhongpengcheng.spine.io.pojo.*;
+import com.zhongpengcheng.spine.io.pojo.attachment.*;
 import com.zhongpengcheng.spine.io.v35.serializer.ISerializer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +31,7 @@ public class FastjsonSerializer implements ISerializer<JSONObject> {
 
     @Override
     public JSONObject serialize(Skeleton skeleton) {
-        if (skeleton == null) throw new SkeletonIOException("skeleton is null.");
+        if (skeleton == null) throw new SpineIOException("skeleton is null.");
         this.skeleton = skeleton;
 
         this.serializeHead();
@@ -275,7 +275,7 @@ public class FastjsonSerializer implements ISerializer<JSONObject> {
             if (attachment instanceof PathAttachment) this.serializePath();
             if (attachment instanceof RegionAttachment) this.serializeRegion();
             if (result.size() > 0) return result;
-            throw new SkeletonIOException("unknown attachment type: " + attachment.getClass());
+            throw new SpineIOException("unknown attachment type: " + attachment.getClass());
         }
 
         private void serializeBoundingBox() {

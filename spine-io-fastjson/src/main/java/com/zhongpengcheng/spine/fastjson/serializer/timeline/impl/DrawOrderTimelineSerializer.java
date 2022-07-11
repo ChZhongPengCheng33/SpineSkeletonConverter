@@ -2,8 +2,8 @@ package com.zhongpengcheng.spine.fastjson.serializer.timeline.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhongpengcheng.spine.fastjson.serializer.timeline.TimelineSerializer;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.DrawOrderTimeline;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.ITimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.DrawOrderTimeline;
+import com.zhongpengcheng.spine.io.pojo.timeline.ITimeline;
 
 /**
  * {@link DrawOrderTimeline}序列化器

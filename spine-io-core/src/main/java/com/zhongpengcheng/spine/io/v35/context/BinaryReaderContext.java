@@ -1,6 +1,6 @@
 package com.zhongpengcheng.spine.io.v35.context;
 
-import com.zhongpengcheng.spine.io.SpineDataInputStream;
+import com.zhongpengcheng.spine.io.stream.SpineDataInputStream;
 import com.zhongpengcheng.spine.util.IOUtils;
 import lombok.Getter;
 import lombok.Setter;

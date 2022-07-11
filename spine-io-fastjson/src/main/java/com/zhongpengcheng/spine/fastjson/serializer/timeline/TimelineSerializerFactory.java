@@ -1,7 +1,7 @@
 package com.zhongpengcheng.spine.fastjson.serializer.timeline;
 
 import com.zhongpengcheng.spine.fastjson.serializer.timeline.impl.*;
-import com.zhongpengcheng.spine.io.v35.pojo.timeline.*;
+import com.zhongpengcheng.spine.io.pojo.timeline.*;
 
 import java.util.HashMap;
 

@@ -1,13 +1,18 @@
 package com.zhongpengcheng.spine.io;
 
+import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.zhongpengcheng.spine.io.executor.PipelineExecutor;
+import com.zhongpengcheng.spine.io.stream.SpineDataInputStream;
+import com.zhongpengcheng.spine.io.stream.SpineDataOutputStream;
 import com.zhongpengcheng.spine.io.v35.context.BinaryReaderContext;
-import com.zhongpengcheng.spine.io.v35.pojo.Head;
+import com.zhongpengcheng.spine.io.pojo.Head;
 import com.zhongpengcheng.spine.util.IOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import sun.reflect.misc.FieldUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,6 +43,10 @@ class SpineDataOutputStreamTest {
                 assertEquals(list.get(i), input.readInt(true), count + " " + list.get(i));
             }
         }
+    }
+
+    @Test
+    void test() {
     }
 
     @Tag("output")
